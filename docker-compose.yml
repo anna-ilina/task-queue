@@ -1,0 +1,19 @@
+services:
+  redis:
+    image: redis
+  task-creator:
+    build:
+      context: .
+      dockerfile: Dockerfile-create-tasks
+    environment:
+      REDIS_HOST: redis
+    depends_on:
+      - redis
+  task-consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile-consume-tasks
+    environment:
+      REDIS_HOST: redis
+    depends_on:
+      - redis
